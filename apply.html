@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply Now</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Apply Now</h2>
+
+    <form id="applyForm">
+
+        <div class="row">
+            <div class="field">
+                <label>First Name *</label>
+                <input type="text" name="firstName" required>
+            </div>
+            <div class="field">
+                <label>Last Name *</label>
+                <input type="text" name="lastName" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="field">
+                <label>Email *</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="field">
+                <label>Phone *</label>
+                <input type="tel" name="phone" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="field">
+                <label>Gender *</label>
+                <select name="gender" required>
+                    <option value="">Select</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Date of Birth *</label>
+                <input type="date" name="dob" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Current Address *</label>
+            <textarea name="address" required></textarea>
+        </div>
+
+        <div class="row">
+            <div class="field">
+                <label>Preferred Job Location *</label>
+                <input type="text" name="jobLocation" required>
+            </div>
+            <div class="field">
+                <label>Preferred Job Role *</label>
+                <input type="text" name="jobRole" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Education *</label>
+            <div class="checkbox-group">
+                <label><input type="radio" name="education" value="Graduation"> Graduation</label>
+                <label><input type="radio" name="education" value="Post Graduation"> Post Graduation</label>
+                <label><input type="radio" name="education" value="Other"> Other</label>
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Experience *</label>
+            <select name="experience" required>
+                <option value="">Select</option>
+                <option>0-1 Year</option>
+                <option>2-4 Years</option>
+                <option>5-8 Years</option>
+                <option>8-10 Years</option>
+                <option>10+ Years</option>
+                <option>Student</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Upload Resume (PDF / DOC) *</label>
+            <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+        </div>
+
+        <button type="submit">Submit Application</button>
+
+        <p id="formMessage"></p>
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

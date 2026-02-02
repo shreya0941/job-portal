@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Job Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Job<span>Portal</span></div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Service</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+    </nav>
+</header>
+
+<!-- About Hero Section -->
+<section class="about-hero">
+    <h1>About Job Portal</h1>
+    <p>Connecting Dreams with Opportunities</p>
+</section>
+
+<!-- About Mission Section -->
+<section class="about-mission">
+    <h2>Our Mission</h2>
+    <p class="mission-sub">We are committed to revolutionizing the job market by bridging the gap between talented candidates and forward-thinking employers.</p>
+    <div class="mission-grid">
+        <div class="mission-box">
+            <div class="mission-icon">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h3>Goal Focused</h3>
+            <p>We help candidates achieve their career aspirations through personalized job recommendations and resources.</p>
+        </div>
+        <div class="mission-box">
+            <div class="mission-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Trusted Partnership</h3>
+            <p>Building strong relationships between employers and job seekers for mutual success and growth.</p>
+        </div>
+        <div class="mission-box">
+            <div class="mission-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Innovation Driven</h3>
+            <p>Leveraging cutting-edge technology to create the best job search experience.</p>
+        </div>
+    </div>
+</section>
+<!-- What We Offer Section -->
+<section class="about-offer">
+    <h2>What We Offer</h2>
+    <div class="offer-content">
+        <p>Extensive Job Listings: Thousands of job opportunities across diverse industries and experience levels.</p>
+        <p>User-Friendly Interface: Intuitive design that makes job searching and applying simple and quick.</p>
+        <p>Advanced Search & Filter: Powerful search tools to find the perfect job match in seconds.</p>
+        <p>Resume Building Tools: Create professional resumes with our easy-to-use builders and templates.</p>
+        <p>Employer Branding: Showcase your company culture and attract top talent effectively.</p>
+        <p>24/7 Support: Dedicated customer support team ready to help you succeed.</p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 JobPortal</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Counter animation for stats
+    function animateCounter() {
+        const counters = document.querySelectorAll('.stat-number');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = Math.floor(current) + '+';
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target + '+';
+                }
+            };
+            
+            updateCounter();
+        });
+    }
+    
+    // Trigger animation when section is visible
+    const statsSection = document.querySelector('.about-stats');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter();
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+    observer.observe(statsSection);
+</script>
+</body>
+</html>

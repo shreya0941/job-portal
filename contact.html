@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Modern Form</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<header>
+  <div class="logo">Job<span>Portal</span></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Service</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+  </nav>
+</header>
+
+  <div class="contact-container">
+    <h2>📧 Contact Us</h2>
+    
+    <form action="#" method="post" id="contactForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us more about your inquiry..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Message</button>
+    
+    </form>
+  </div>
+
+<footer>
+  <p>© 2025 JobPortal</p>
+</footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simulate form submission
+      const btn = document.querySelector('.submit-btn');
+      const successMsg = document.getElementById('successMsg');
+      
+      btn.innerHTML = 'Sending...';
+      btn.disabled = true;
+      
+      setTimeout(() => {
+        btn.innerHTML = 'Sent!';
+        successMsg.style.display = 'block';
+        btn.disabled = false;
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
