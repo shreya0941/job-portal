@@ -1,22 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ---------------- JOB DATA ----------------
+    // ================= JOB DATA =================
     const jobs = [
-        { title: "Frontend Developer", company: "Google", location: "Bangalore" },
-        { title: "Backend Developer", company: "Amazon", location: "Hyderabad" },
-        { title: "Full Stack Developer", company: "Infosys", location: "Pune" },
-        { title: "UI/UX Designer", company: "TCS", location: "Mumbai" }
+        { title: "Frontend Developer", company: "Google", location: "Bangalore", trending: true },
+        { title: "Backend Developer", company: "Amazon", location: "Hyderabad", trending: true },
+        { title: "Full Stack Developer", company: "Infosys", location: "Pune", trending: false },
+        { title: "UI/UX Designer", company: "TCS", location: "Mumbai", trending: false }
     ];
 
+    // ================= ELEMENTS =================
     const jobList = document.getElementById("job-list");
+    const trendingList = document.getElementById("trending-jobs");
     const jobCount = document.getElementById("jobCount");
     const keyword = document.getElementById("keyword");
     const locationInput = document.getElementById("location");
+    const applyForm = document.getElementById("applyForm");
 
-    // ---------------- DISPLAY JOBS ----------------
+    // ================= JOB COUNT =================
+    if (jobCount) {
+        let count = 0;
+        const target = 5000;
+        const interval = setInterval(() => {
+            count += Math.ceil(target / 100);
+            if (count > target) count = target;
+            jobCount.innerText = count.toLocaleString();
+            if (count === target) clearInterval(interval);
+        }, 20);
+    }
+
+    // ================= DISPLAY JOBS =================
     function displayJobs(list) {
         if (!jobList) return;
+
         jobList.innerHTML = "";
+
+        if (list.length === 0) {
+            jobList.innerHTML = "<p>No jobs found</p>";
+            return;
+        }
 
         list.forEach(job => {
             jobList.innerHTML += `
@@ -29,125 +50,113 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    displayJobs(jobs);
+    // ================= TRENDING JOBS =================
+    function displayTrendingJobs() {
+        if (!trendingList) return;
 
-    // ---------------- COUNTER ANIMATION ----------------
-    if (jobCount) {
-        let count = 0;
-        const target = jobs.length * 10;
+        trendingList.innerHTML = "";
 
-        const interval = setInterval(() => {
-            count++;
-            jobCount.innerText = count;
-            if (count === target) clearInterval(interval);
-        }, 50);
+        const trendingJobs = jobs.filter(job => job.trending);
+
+        trendingJobs.forEach(job => {
+            trendingList.innerHTML += `
+                <div class="job-card trending">
+                    <h3>${job.title}</h3>
+                    <p>${job.company}</p>
+                    <p>${job.location}</p>
+                </div>
+            `;
+        });
     }
 
-    // ---------------- LIVE SEARCH ----------------
+    // ================= LIVE SEARCH =================
     function filterJobs() {
         const key = keyword ? keyword.value.toLowerCase() : "";
         const loc = locationInput ? locationInput.value.toLowerCase() : "";
 
-        const filtered = jobs.filter(job =>
+        const filteredJobs = jobs.filter(job =>
             job.title.toLowerCase().includes(key) &&
             job.location.toLowerCase().includes(loc)
         );
 
-        displayJobs(filtered);
+        displayJobs(filteredJobs);
     }
 
     if (keyword) keyword.addEventListener("input", filterJobs);
     if (locationInput) locationInput.addEventListener("input", filterJobs);
 
-    // ---------------- SCROLL REVEAL ----------------
-    window.addEventListener("scroll", () => {
-        document.querySelectorAll(".reveal").forEach(section => {
-            const top = section.getBoundingClientRect().top;
-            if (top < window.innerHeight - 100) {
-                section.classList.add("active");
+    // ================= REVEAL ON SCROLL =================
+    const revealElements = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
             }
         });
-    });
+    }, { threshold: 0.1 });
 
-    // ---------------- NAV ACTIVE LINK ----------------
-    document.querySelectorAll("nav a").forEach(link => {
-        link.addEventListener("click", () => {
-            document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
-            link.classList.add("active");
+    revealElements.forEach(el => observer.observe(el));
+
+    // ================= APPLY FORM =================
+    if (applyForm) {
+        applyForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const message = document.getElementById("formMessage");
+            const email = applyForm.email.value.trim();
+            const phone = applyForm.phone.value.trim();
+            const resume = applyForm.resume.files[0];
+
+            // Education validation
+            if (!document.querySelector('input[name="education"]:checked')) {
+                message.textContent = "Please select at least one education option.";
+                message.className = "error";
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                message.textContent = "Invalid email format.";
+                message.className = "error";
+                return;
+            }
+
+            // Phone validation
+            if (!/^\d{10,}$/.test(phone)) {
+                message.textContent = "Phone number must contain at least 10 digits.";
+                message.className = "error";
+                return;
+            }
+
+            // Resume validation
+            if (!resume) {
+                message.textContent = "Please upload your resume.";
+                message.className = "error";
+                return;
+            }
+
+            const allowedTypes = [
+                "application/pdf",
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ];
+
+            if (!allowedTypes.includes(resume.type)) {
+                message.textContent = "Resume must be PDF or DOC/DOCX.";
+                message.className = "error";
+                return;
+            }
+
+            message.textContent = "Application submitted successfully!";
+            message.className = "success";
+
+            applyForm.submit();
         });
-    });
-
-    document.getElementById("applyForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const form = e.target;
-    const message = document.getElementById("formMessage");
-
-    const email = form.email.value.trim();
-    const phone = form.phone.value.trim();
-    const resume = form.resume.files[0];
-
-    // Education checkbox validation
-    const educationChecked = document.querySelectorAll(
-        'input[name="education"]:checked'
-    ).length;
-
-    if (!educationChecked) {
-        message.textContent = "Please select at least one education option.";
-        message.className = "error";
-        return;
     }
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        message.textContent = "Invalid email format.";
-        message.className = "error";
-        return;
-    }
+    // ================= INITIAL LOAD =================
+    displayTrendingJobs();
+    displayJobs(jobs);
 
-    // Phone validation
-    if (phone.length < 10) {
-        message.textContent = "Phone number must be at least 10 digits.";
-        message.className = "error";
-        return;
-    }
-
-    // Resume validation
-    if (resume) {
-        const allowedTypes = [
-            "application/pdf",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ];
-
-        if (!allowedTypes.includes(resume.type)) {
-            message.textContent = "Resume must be PDF or DOC/DOCX.";
-            message.className = "error";
-            return;
-        }
-    }
-
-    message.textContent = "Application submitted successfully!";
-    message.className = "success";
-    form.reset();
-    });
 });
-const dropdownBtn = document.querySelector(".dropdown-btn");
-const dropdownContent = document.querySelector(".dropdown-content");
-
-if (dropdownBtn && dropdownContent) {
-    dropdownBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdownContent.classList.toggle("show");
-    });
-
-    dropdownContent.addEventListener("click", (e) => {
-        e.stopPropagation();
-    });
-
-    document.addEventListener("click", () => {
-        dropdownContent.classList.remove("show");
-    });
-}
-

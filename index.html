@@ -3,50 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Job Portal | Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
 
+<!-- ================= HEADER ================= -->
 <header>
     <div class="logo">Job<span>Portal</span></div>
+
     <nav>
         <a href="#">Home</a>
         <a href="services.html">Service</a>
         <a href="aboutus.html">About Us</a>
         <a href="contact.html">Contact Us</a>
-    
-            <div class="dropdown">
-  <button class="dropdown-btn">Login</button>
-  <div class="dropdown-content">
-    <a href="hr-login.html" class="hr">HR Login</a>
-    <a href="admin-login.html" class="admin">Admin Login</a>
-  </div>
-</div>
 
+        <div class="dropdown">
+            <button class="dropdown-btn">Login</button>
+            <div class="dropdown-content">
+                <a href="hr-login.html" class="hr">HR Login</a>
+                <a href="admin-login.html" class="admin">Admin Login</a>
+            </div>
+        </div>
     </nav>
 </header>
 
+<!-- ================= HERO ================= -->
 <section class="hero">
-    <h1 class="animate-text">Find Your <span>Dream Job</span></h1>
-    <p class="hero2">Over <span id="jobCount">0</span>+ jobs available now</p>
+    <h1 class="animate-text">
+        Find Your <span>Dream Job</span>
+    </h1>
 
+    <p class="hero2">
+        Over <span id="jobCount">0</span>+ jobs available now
+    </p>
 
     <div class="search-box">
-           <a href="apply.html" class="apply-btn">Apply now</a>
+        <a href="apply.php" class="apply-btn">Apply Now</a>
     </div>
 </section>
 
+<!-- ================= TRENDING JOBS ================= -->
 <section class="jobs reveal">
     <h2>Trending Jobs</h2>
-    <div id="job-list" class="job-list"></div>
+
+    <!-- IMPORTANT: this ID MUST match JS -->
+    <div id="trending-jobs" class="job-list"></div>
 </section>
 
-
+<!-- ================= FOOTER ================= -->
 <footer>
-    <p>© 2025 JobPortal</p>
+    <p>© 2025 JobPortal. All rights reserved.</p>
 </footer>
 
+<!-- ================= SCRIPT ================= -->
 <script src="script.js"></script>
+
 </body>
 </html>
